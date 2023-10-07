@@ -44,3 +44,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Branch name pattern
+All branches must be created in kebab-case.
+
+Bug branch name: **bugfix/**{TICKE-NUMBER}-{TICKET-SHORT-DESCRIPTION}
+e.g. bugfix/0-fix-issue-with-types
+
+Feature branch name: **feature/**{TICKE-NUMBER}-{TICKET-SHORT-DESCRIPTION}
+feature/1-feature-settings
