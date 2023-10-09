@@ -1,11 +1,11 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { BottomNavigation } from '@mui/material';
 
 export default function Footer() {
   return (
-    <Typography variant="h3">
+    <BottomNavigation>
       Footer
-    </Typography>
+    </BottomNavigation>
 
   );
 }

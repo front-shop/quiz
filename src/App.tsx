@@ -6,6 +6,7 @@ import ColorModeContext from './config/color-context';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Quiz from './pages/Quiz/Quiz';
+import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
 import './App.css';
 
@@ -29,7 +30,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/pets/:id" element={<Quiz />} />
+              <Route path="/quiz/:id" element={<Quiz />} />
+              <Route path="/about" element={<About />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
