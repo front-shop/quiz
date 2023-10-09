@@ -1,10 +1,12 @@
 import React from 'react';
-import Box from '@mui/material/Box';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import ThemeToggler from './components/ThemeToggler';
 import getDesignTokens from './theme';
 import ColorModeContext from './config/color-context';
-import logo from './logo.svg';
+import Home from './pages/Home/Home';
+import NotFound from './pages/NotFound/NotFound';
+import Quiz from './pages/Quiz/Quiz';
+import Layout from './components/Layout/Layout';
 import './App.css';
 
 function App() {
@@ -23,22 +25,15 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <Box
-            sx={{
-              display: 'flex',
-              maxWidth: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              bgcolor: 'background.default',
-              color: 'text.primary',
-              p: 3,
-            }}
-          >
-            <img src={logo} className="App-logo" alt="logo" />
-            <ThemeToggler />
-          </Box>
-        </div>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/pets/:id" element={<Quiz />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
