@@ -2,7 +2,6 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
 import Navbar from '../Navbar/Navbar';
 
 export default function Layout() {
@@ -19,7 +18,6 @@ export default function Layout() {
           </Grid>
         </Grid>
       </main>
-      <Footer />
     </>
   );
 }
