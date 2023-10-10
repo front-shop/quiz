@@ -14,10 +14,10 @@ export default function Layout() {
       <Header />
       <MainWrapper>
         <Grid container>
-          <Grid item xs={12} sm={3} xl={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Grid item xs={12} sm={3} md={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Navbar />
           </Grid>
-          <Grid item xs={12} sm={9} xl={10}>
+          <Grid item xs={12} sm={9} md={8}>
             <Outlet />
           </Grid>
         </Grid>
