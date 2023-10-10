@@ -6,6 +6,5 @@ export default function Home() {
     <Typography variant="h3">
       Home Page
     </Typography>
-
   );
 }

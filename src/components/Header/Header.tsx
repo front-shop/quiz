@@ -10,28 +10,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ThemeToggler from '../ThemeToggler';
 import Navbar from '../Navbar/Navbar';
+import { DRAWERWIDTH } from '../../constants/constants';
 import logo from '../../logo.svg';
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  // eslint-disable-next-line react/require-default-props
-  window?: () => Window;
-}
-
-const drawerWidth = 240;
-
-export default function Header(props: Props) {
-  const { window } = props;
+export default function Header() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
-  const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -62,7 +49,6 @@ export default function Header(props: Props) {
         </Toolbar>
       </AppBar>
       <Drawer
-        container={container}
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
@@ -71,7 +57,7 @@ export default function Header(props: Props) {
         }}
         sx={{
           display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWERWIDTH },
         }}
       >
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -82,9 +68,7 @@ export default function Header(props: Props) {
         </Box>
         <Navbar />
       </Drawer>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-      </Box>
+      <Toolbar />
     </Box>
   );
 }
