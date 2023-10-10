@@ -7,9 +7,9 @@ import { styled } from '@mui/material';
 
 const NavWrapper = styled('nav')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
-    paddingTop: theme.spacing(3),
-    minHeight: 'calc(100vh - 64px)',
-    borderRight: '1px solid rgb(229, 234, 242)',
+    paddingTop: theme.spacing(4),
+    position: 'sticky',
+    top: '64px',
   },
 }));
 

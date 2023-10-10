@@ -8,16 +8,22 @@ import {
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function QuizItem({ item }: any) {
+interface IQuizItemProps {
+  id: string,
+  img?: string,
+  title: string,
+  description?: string,
+}
+
+export default function QuizItem({ item }: { item: IQuizItemProps }) {
   return (
-    <Card>
-      <CardActionArea>
+    <Card sx={{ height: '100%' }}>
+      <CardActionArea href={`/quiz/${item.id}`}>
         <CardMedia
           component="img"
           height="180"
           image={item.img ? item.img : noImage}
-          alt="green iguana"
+          alt={item.title}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

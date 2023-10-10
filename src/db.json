@@ -1,22 +1,50 @@
 [
   {
-    "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    "id": "0",
+    "img": "../../assets/images/img-01.jpeg",
     "title": "HTML",
     "description": "HTML is the standard markup language for Web pages."
   },
   {
+    "id": "1",
     "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
     "title": "CSS",
     "description": "Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML"
   },
   {
+    "id": "3",
     "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    "title": "HTML",
-    "description": "HTML is the standard markup language for Web pages."
+    "title": "JavaScript",
+    "description": "JavaScript (JS) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions. "
   },
   {
+    "id": "4",
     "img": "",
-    "title": "CSS",
-    "description": "Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML. Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML"
+    "title": "Ract",
+    "description": "The library for web and native user interfaces"
+  },
+  {
+    "id": "5",
+    "img": "",
+    "title": "Git",
+    "description": "Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency."
+  },
+  {
+    "id": "6",
+    "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    "title": "TypeScript",
+    "description": "TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale."
+  },
+  {
+    "id": "7",
+    "img": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    "title": "MUI",
+    "description": "An open-source React component library that implements Google's Material Design."
+  },
+  {
+    "id": "8",
+    "img": "",
+    "title": "Firebase",
+    "description": "Firebase is an app development platform that helps you build and grow apps and games users love. Backed by Google and trusted by millions of businesses around the world."
   }
 ]

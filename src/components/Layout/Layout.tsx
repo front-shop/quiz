@@ -14,7 +14,7 @@ export default function Layout() {
       <Header />
       <MainWrapper>
         <Grid container>
-          <Grid item xs={12} sm={3} md={2} sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Grid item xs={12} sm={3} md={2} sx={{ display: { xs: 'none', sm: 'block' }, borderRight: '1px solid rgb(229, 234, 242)' }}>
             <Navbar />
           </Grid>
           <Grid item xs={12} sm={9} md={8}>

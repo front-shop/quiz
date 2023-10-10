@@ -5,14 +5,12 @@ import itemData from '../../db.json';
 
 export default function QuizItems() {
   return (
-    <div>
-      <Grid container spacing={2} sx={{ alignItems: 'stretch' }}>
-        {itemData.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.img}>
-            <QuizItem item={item} />
-          </Grid>
-        ))}
-      </Grid>
-    </div>
+    <Grid container spacing={2} sx={{ alignItems: 'stretch', paddingTop: 2, paddingBottom: 4 }}>
+      {itemData.map((item) => (
+        <Grid item xs={12} sm={6} md={4} key={item.img}>
+          <QuizItem item={item} />
+        </Grid>
+      ))}
+    </Grid>
   );
 }
