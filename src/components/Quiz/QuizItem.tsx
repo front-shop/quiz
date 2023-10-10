@@ -22,7 +22,7 @@ export default function QuizItem({ item }: { item: IQuizItemProps }) {
         <CardMedia
           component="img"
           height="180"
-          image={item.img ? item.img : noImage}
+          image={item.img || noImage}
           alt={item.title}
         />
         <CardContent>
@@ -35,7 +35,12 @@ export default function QuizItem({ item }: { item: IQuizItemProps }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          href={`/quiz/${item.id}`}
+          sx={{ marginTop: 'auto' }}
+        >
           Start
           {' '}
           {item.title}
