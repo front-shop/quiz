@@ -10,16 +10,13 @@ import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
 import './App.css';
 
-function App() {
+export default function App() {
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    []
-  );
+  const colorMode = React.useMemo(() => ({
+    toggleColorMode: () => {
+      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    }
+  }), []);
 
   const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
@@ -40,5 +37,3 @@ function App() {
     </ColorModeContext.Provider>
   );
 }
-
-export default App;

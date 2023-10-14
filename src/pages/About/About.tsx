@@ -52,13 +52,15 @@ export default function About() {
           <ListItemText
             primary="Challenge Yourself:"
             secondary="Our quizzes are designed to challenge your knowledge and problem-solving skills.
-            Whether you're a beginner or an experienced tech professional, you'll find quizzes suited to your level."
+            Whether you're a beginner or an experienced tech professional,
+            you'll find quizzes suited to your level."
           />
         </ListItem>
         <ListItem disableGutters>
           <ListItemText
             primary="Learn as You Play:"
-            secondary="We believe that learning should be fun, so we've made sure that our quizzes are enjoyable and informative.
+            secondary="We believe that learning should be fun, so we've
+            made sure that our quizzes are enjoyable and informative.
             You'll not only test your knowledge but also gain valuable insights with every question."
           />
         </ListItem>
@@ -91,7 +93,8 @@ export default function About() {
         <ListItem disableGutters>
           <ListItemText
             primary="Constant Updates:"
-            secondary="Technology evolves rapidly, and so do our quizzes. We regularly update our content to keep it relevant and fresh."
+            secondary="Technology evolves rapidly, and so do our quizzes.
+            We regularly update our content to keep it relevant and fresh."
           />
         </ListItem>
       </List>

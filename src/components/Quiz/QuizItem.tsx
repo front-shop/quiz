@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {
-  Button, CardActionArea, CardActions, styled
+  Button, CardActionArea, CardActions, styled,
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
 

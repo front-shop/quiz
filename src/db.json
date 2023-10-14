@@ -11,18 +11,15 @@
         "options": [
           {
             "id": 0,
-            "text": "the <head> element",
-            "option": true
+            "text": "the <head> element"
           },
           {
             "id": 1,
-            "text": "the <body> element",
-            "option": false
+            "text": "the <body> element"
           },
           {
             "id": 2,
-            "text": "the <footer> element",
-            "option": false
+            "text": "the <footer> element"
           }
         ]
       },
