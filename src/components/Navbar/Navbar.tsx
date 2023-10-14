@@ -9,8 +9,8 @@ const NavWrapper = styled('nav')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     paddingTop: theme.spacing(4),
     position: 'sticky',
-    top: '64px',
-  },
+    top: '64px'
+  }
 }));
 
 export default function Navbar() {

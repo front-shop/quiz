@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {
-  Button, CardActionArea, CardActions, styled,
+  Button, CardActionArea, CardActions, styled
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
 
@@ -20,13 +20,12 @@ const CardActionAreaInner = styled('div')(({ theme }) => ({
     heigh: '180px',
     overflow: 'hidden',
     '& img': {
-      transition: 'all .8s ease-out',
+      transition: 'all .8s ease-out'
     },
     '&:hover img': {
-      transform: 'scale(1.05)',
-    },
-  },
-
+      transform: 'scale(1.05)'
+    }
+  }
 }));
 
 export default function QuizItem({ item }: { item: IQuizItemProps }) {

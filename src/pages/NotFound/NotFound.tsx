@@ -14,16 +14,14 @@ export default function NotFound() {
         alignItems: 'center',
         flexDirection: 'column',
         minHeight: '100vh',
-        backgroundColor: 'background.default',
+        backgroundColor: 'background.default'
       }}
     >
       <Typography variant="h2">Oops!</Typography>
       <Typography variant="h1">404</Typography>
       <Typography
         variant="body1"
-        sx={{
-          p: 3,
-        }}
+        sx={{ p: 3 }}
       >
         The page you’re looking for doesn’t exist.
       </Typography>

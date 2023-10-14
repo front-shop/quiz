@@ -8,7 +8,7 @@ import ColorModeContext from '../config/color-context';
 const ThemeToglerWrapper = styled('div')(() => ({
   position: 'absolute',
   top: '12px',
-  right: '15px',
+  right: '15px'
 }));
 
 export default function ThemeToggler() {

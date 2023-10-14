@@ -40,7 +40,7 @@ export default function Header() {
             alignItems: 'center',
             justifyContent: 'center',
             margin: 'auto',
-            padding: '10px',
+            padding: '10px'
           }}
           >
             <img src={logo} className="App-logo" alt="logo" />
@@ -53,11 +53,11 @@ export default function Header() {
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
-          keepMounted: true,
+          keepMounted: true
         }}
         sx={{
           display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWERWIDTH },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWERWIDTH }
         }}
       >
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
