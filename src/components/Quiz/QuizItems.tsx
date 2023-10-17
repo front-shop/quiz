@@ -6,7 +6,7 @@ import { Grid } from '@mui/material';
 import { db } from '../../firebase-config';
 import QuizItem from './QuizItem';
 
-export default function QuizItems() {
+const QuizItems = () => {
   const [quizInfo, setQuizInfo] = useState([]);
   const quizesCollectionRef = collection(db, 'quizes');
 
@@ -27,4 +27,5 @@ export default function QuizItems() {
       ))}
     </Grid>
   );
-}
+};
+export default QuizItems;

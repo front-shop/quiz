@@ -13,7 +13,7 @@ import Navbar from '../Navbar/Navbar';
 import { DRAWERWIDTH } from '../../constants/constants';
 import logo from '../../logo.svg';
 
-export default function Header() {
+const Header = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -71,4 +71,5 @@ export default function Header() {
       <Toolbar />
     </Box>
   );
-}
+};
+export default Header;

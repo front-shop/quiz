@@ -10,7 +10,7 @@ import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
 import './App.css';
 
-export default function App() {
+const App = () => {
   const [mode, setMode] = React.useState<'light' | 'dark'>('light');
   const colorMode = React.useMemo(() => ({
     toggleColorMode: () => {
@@ -36,4 +36,5 @@ export default function App() {
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
-}
+};
+export default App;

@@ -3,8 +3,7 @@ import {
   Typography, Container, List, ListItem, ListItemText, Divider
 } from '@mui/material';
 
-export default function About() {
-  return (
+const About = () => (
     <Container>
       <Typography variant="h2" pb={4} pt={4} sx={{ textAlign: 'center' }}>
         About Us
@@ -115,5 +114,6 @@ export default function About() {
         Happy quizzing!
       </Typography>
     </Container>
-  );
-}
+);
+
+export default About;

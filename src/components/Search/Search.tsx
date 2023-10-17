@@ -8,12 +8,11 @@ const SearchWrapper = styled('div')(({ theme }) => ({
   }
 }));
 
-export default function Search() {
-  return (
+const Search = () => (
     <SearchWrapper>
       <Typography variant="h5">
         Search bar
       </Typography>
     </SearchWrapper>
-  );
-}
+);
+export default Search;

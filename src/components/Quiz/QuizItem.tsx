@@ -28,8 +28,7 @@ const CardActionAreaInner = styled('div')(({ theme }) => ({
   }
 }));
 
-export default function QuizItem({ item }: { item: IQuizItemProps }) {
-  return (
+const QuizItem = ({ item }: { item: IQuizItemProps }) => (
     <Card sx={{ height: '100%' }}>
       <CardActionArea href={`/quiz/${item.id}`}>
         <CardActionAreaInner>
@@ -64,5 +63,5 @@ export default function QuizItem({ item }: { item: IQuizItemProps }) {
         </Button>
       </CardActions>
     </Card>
-  );
-}
+);
+export default QuizItem;

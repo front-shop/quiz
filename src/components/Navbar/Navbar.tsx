@@ -13,8 +13,7 @@ const NavWrapper = styled('nav')(({ theme }) => ({
   }
 }));
 
-export default function Navbar() {
-  return (
+const Navbar = () => (
     <NavWrapper>
       <List>
         <ListItem disablePadding>
@@ -29,5 +28,5 @@ export default function Navbar() {
         </ListItem>
       </List>
     </NavWrapper>
-  );
-}
+);
+export default Navbar;

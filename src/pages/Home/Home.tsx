@@ -8,8 +8,7 @@ const MainWrapper = styled('div')(({ theme }) => ({
   paddingbottom: theme.spacing(3)
 }));
 
-export default function Home() {
-  return (
+const Home = () => (
     <Container>
       <MainWrapper>
         <Search />
@@ -19,5 +18,6 @@ export default function Home() {
         <QuizItems />
       </MainWrapper>
     </Container>
-  );
-}
+);
+
+export default Home;

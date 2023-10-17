@@ -8,8 +8,7 @@ const MainWrapper = styled('main')(({ theme }) => ({
   background: theme.palette.background.default
 }));
 
-export default function Layout() {
-  return (
+const Layout = () => (
     <>
       <Header />
       <MainWrapper>
@@ -28,5 +27,5 @@ export default function Layout() {
         </Grid>
       </MainWrapper>
     </>
-  );
-}
+);
+export default Layout;

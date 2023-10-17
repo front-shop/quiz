@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouteError } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 
-export default function NotFound() {
+const NotFound = () => {
   const error = useRouteError() as Error;
   console.log('err', error);
 
@@ -28,4 +28,5 @@ export default function NotFound() {
       <Button variant="outlined" href="/" color="secondary">Back Home</Button>
     </Box>
   );
-}
+};
+export default NotFound;
