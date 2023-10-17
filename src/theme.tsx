@@ -2,6 +2,11 @@ import { PaletteMode } from '@mui/material';
 import { amber, grey, purple } from '@mui/material/colors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
+  typography: {
+    fontFamily: [
+      'Inter'
+    ].join(',')
+  },
   palette: {
     mode,
     ...(mode === 'light'
