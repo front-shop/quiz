@@ -7,7 +7,7 @@ import {
   Button, CardActionArea, CardActions, styled
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
-import { IQuizItemProps } from '../../types/quiz';
+import { IQuizItem } from '../../store/services/quizes/constant';
 
 const CardActionAreaInner = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -22,7 +22,7 @@ const CardActionAreaInner = styled('div')(({ theme }) => ({
   }
 }));
 
-const QuizItem = ({ item }: { item: IQuizItemProps }) => (
+const QuizItem = ({ item }: { item: IQuizItem }) => (
     <Card sx={{ height: '100%' }}>
       <CardActionArea href={`/quiz/${item.id}`}>
         <CardActionAreaInner>

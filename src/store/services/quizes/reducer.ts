@@ -1,19 +1,24 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { moduleName } from './constant';
+import { createSlice } from '@reduxjs/toolkit';
+// import type { PayloadAction } from '@reduxjs/toolkit';
+import { moduleName, IQuizItem } from './constant';
 import thunks from './thunks';
-import { IQuizItemProps } from '../../../types/quiz';
+
+enum EStatusType {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Failed = 'failed'
+}
 
 interface IInitialState {
-  quizes: IQuizItemProps[];
-  status: 'idle' | 'loading' | 'success' | 'failed';
+  quizes: IQuizItem[];
+  status: EStatusType;
   error: string | null;
 }
 
 const initialState: IInitialState = {
   quizes: [],
-  status: 'idle',
+  status: EStatusType.Idle,
   error: null
 };
 
@@ -22,24 +27,20 @@ export const quizesReducer = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(
-        thunks.fetchQuizes.pending,
-        (state: IInitialState) => {
-          state.status = 'loading';
-        }
-      )
-      .addCase(
-        thunks.fetchQuizes.fulfilled,
-        (state: IInitialState, action: PayloadAction<string>) => {
-          state.status = 'success';
-          state.quizes = action.payload;
-        }
-      )
-      .addCase(thunks.fetchQuizes.rejected, (state: IInitialState, action: PayloadAction<string>) => {
-        state.status = 'failed';
-        state.error = action.error.message || 'Something went wrong';
-      });
+    builder.addCase(
+      thunks.fetchQuizes.pending,
+      (state: IInitialState) => {
+        state.status = EStatusType.Loading;
+      }
+    );
+    builder.addCase(thunks.fetchQuizes.fulfilled, (state, action) => {
+      state.status = EStatusType.Success;
+      state.quizes = action.payload;
+    });
+    builder.addCase(thunks.fetchQuizes.rejected, (state, action) => {
+      state.status = EStatusType.Failed;
+      state.error = action.error.message || 'Something went wrong';
+    });
   }
 });
 
