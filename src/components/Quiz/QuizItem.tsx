@@ -7,13 +7,7 @@ import {
   Button, CardActionArea, CardActions, styled
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
-
-interface IQuizItemProps {
-  id: string,
-  img?: string,
-  title: string,
-  description?: string,
-}
+import { IQuizItemProps } from '../../types/quiz';
 
 const CardActionAreaInner = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {

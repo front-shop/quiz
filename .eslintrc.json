@@ -125,7 +125,8 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "warn",
     "comma-dangle": "off",
-    "@typescript-eslint/comma-dangle": "error"
+    "@typescript-eslint/comma-dangle": "error",
+    "no-param-reassign": ["error", { "props": false }]
   },
   "overrides": [
     {

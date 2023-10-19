@@ -19,14 +19,14 @@ const About = () => (
       </Typography>
       <Divider sx={{ marginBottom: '24px', marginTop: '24px' }}/>
       {AboutInfo.map((item: IAboutInfo) => (
-        <Typography key={item.id}>
+        <React.Fragment key={item.id}>
           <Typography variant="h4" pb={2} pt={3} sx={{ fontWeight: 'medium' }}>
             {item.title}
           </Typography>
           <Typography variant="body1" pb={2}>
             {item.text}
           </Typography>
-        </Typography>
+        </React.Fragment>
       ))}
       <Divider sx={{ marginTop: '32px' }} />
       <Typography variant="h3" pb={3} pt={3} mt={3} sx={{ textAlign: 'center' }}>
