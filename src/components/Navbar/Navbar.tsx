@@ -8,9 +8,7 @@ import routes from '../../constants/routes';
 
 const NavWrapper = styled('nav')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
-    paddingTop: theme.spacing(4),
-    position: 'sticky',
-    top: '64px'
+    paddingTop: theme.spacing(4)
   }
 }));
 
