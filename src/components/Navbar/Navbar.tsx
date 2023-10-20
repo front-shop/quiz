@@ -24,8 +24,7 @@ const ListItemWrapper = styled(ListItem)(({ theme }) => ({
     transition: '.3s linear'
   },
   '& a.active': {
-    color: theme.palette.action.active,
-    background: theme.palette.grey.A400
+    background: 'rgba(186, 104, 200, 0.4)'
   },
   '& .active .MuiTypography-root': {
     fontWeight: '500'
