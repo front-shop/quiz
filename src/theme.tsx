@@ -1,5 +1,5 @@
 import { PaletteMode } from '@mui/material';
-import { amber, grey, purple } from '@mui/material/colors';
+import { amber, grey } from '@mui/material/colors';
 
 const getDesignTokens = (mode: PaletteMode) => ({
   typography: {
@@ -16,20 +16,13 @@ const getDesignTokens = (mode: PaletteMode) => ({
         divider: amber[200],
         text: {
           primary: grey[900],
-          secondary: grey[800]
-        },
-        background: {
-          level1: '#F0F4F8'
+          secondary: grey[700]
         }
       }
       : {
-        // palette values for dark mode
-        background: {
-          default: purple[500]
-        },
         text: {
           primary: '#fff',
-          secondary: grey[500]
+          secondary: grey[400]
         }
       })
   }
