@@ -1,13 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React, { useEffect, useCallback } from 'react';
-import { Grid, styled } from '@mui/material';
+import { Grid, Typography, styled } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import QuizItem from './QuizItem';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { quizesThunks } from '../../store/services/quizes';
 
-const ProgressWrapper = styled('div')(() => ({
+const ProgressWrap = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -32,22 +30,18 @@ const QuizItems = () => {
     fetchData();
   }, [fetchData]);
 
-  const quizesList = quizes.map((item) => (
-    <Grid item xs={12} sm={6} md={4} key={item.id}>
-      <QuizItem item={item} />
-    </Grid>
-  ));
-
   const isNetworkOk = error !== 'Network Error' && status !== 'failed';
+
+  if (!isNetworkOk) return <Grid><Typography variant="h3">{error}</Typography></Grid>;
+  if (isNetworkOk && status === 'loading') return (<ProgressWrap><CircularProgress color="inherit"/></ProgressWrap>);
 
   return (
     <Grid container spacing={2} sx={{ alignItems: 'stretch', paddingTop: 2, paddingBottom: 4 }}>
-      {isNetworkOk && (
-        <>
-          {status === 'loading' && <ProgressWrapper><CircularProgress color="inherit"/></ProgressWrapper>}
-          {status === 'success' && <>{quizesList}</>}
-        </>
-      )}
+      {quizes.map((item) => (
+        <Grid item xs={12} sm={6} md={4} key={item.id}>
+          <QuizItem item={item} />
+        </Grid>))
+      }
     </Grid>
   );
 };
