@@ -1,19 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {
-  Button, CardActionArea, CardActions, styled
+  CardActions, styled
 } from '@mui/material';
 import noImage from '../../assets/images/no-image.jpg';
-
-interface IQuizItemProps {
-  id: string,
-  img?: string,
-  title: string,
-  description?: string,
-}
+import { IQuizItem } from '../../store/services/quizes/constant';
+import routes from '../../constants/routes';
 
 const CardActionAreaInner = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -28,9 +24,33 @@ const CardActionAreaInner = styled('div')(({ theme }) => ({
   }
 }));
 
-const QuizItem = ({ item }: { item: IQuizItemProps }) => (
-    <Card sx={{ height: '100%' }}>
-      <CardActionArea href={`/quiz/${item.id}`}>
+const CardStyled = styled(Card)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  '& a': {
+    textDecoration: 'none',
+    color: theme.palette.text.primary
+  }
+}));
+
+const CardActionsStyled = styled(CardActions)(({ theme }) => ({
+  '& a': {
+    color: theme.palette.secondary.dark,
+    transition: '.4s ease-in-out',
+    disaply: 'inline-flex',
+    padding: '8px',
+    border: `1px solid ${theme.palette.secondary.light}`
+  },
+  '& a:hover': {
+    color: theme.palette.common.white,
+    background: theme.palette.secondary.dark
+  }
+}));
+
+const QuizItem = ({ item }: { item: IQuizItem }) => (
+    <CardStyled sx={{ height: '100%' }}>
+      <Link to={`/${routes.quiz.key}/${item.title}`} state={{ quizId: item.id }}>
         <CardActionAreaInner>
           <CardMedia
             component="img"
@@ -47,21 +67,16 @@ const QuizItem = ({ item }: { item: IQuizItemProps }) => (
             {item.description}
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          href={`/quiz/${item.id}`}
-          sx={{ marginTop: 'auto' }}
-        >
+      </Link>
+      <CardActionsStyled sx={{ padding: '16px' }}>
+        <Link to={`/${routes.quiz.key}/${item.title}`} state={{ quizId: item.id }}>
           Start
           {' '}
           {item.title}
           {' '}
           quiz
-        </Button>
-      </CardActions>
-    </Card>
+        </Link>
+      </CardActionsStyled>
+    </CardStyled>
 );
 export default QuizItem;

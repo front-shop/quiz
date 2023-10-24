@@ -1,31 +1,55 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { styled } from '@mui/material';
+import routes from '../../constants/routes';
 
 const NavWrapper = styled('nav')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
-    paddingTop: theme.spacing(4),
-    position: 'sticky',
-    top: '64px'
+    paddingTop: theme.spacing(4)
+  }
+}));
+
+const ListItemWrapper = styled(ListItem)(({ theme }) => ({
+  '& a': {
+    textAlign: 'left',
+    width: '100%',
+    textDecoration: 'none',
+    padding: '8px 16px 8px 24px',
+    color: theme.palette.text.primary,
+    transition: '.3s linear'
+  },
+  '& a.active': {
+    background: 'rgba(186, 104, 200, 0.4)'
+  },
+  '& .active .MuiTypography-root': {
+    fontWeight: '500'
+  },
+  [theme.breakpoints.up('sm')]: {
   }
 }));
 
 const Navbar = () => (
     <NavWrapper>
       <List>
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="/">
+        <ListItemWrapper disablePadding>
+          <NavLink
+            to={`/${routes.homepage}`}
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
             <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton component="a" href="/about">
+          </NavLink>
+        </ListItemWrapper>
+        <ListItemWrapper disablePadding>
+          <NavLink
+            to={`/${routes.about}`}
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
             <ListItemText primary="About" />
-          </ListItemButton>
-        </ListItem>
+          </NavLink>
+        </ListItemWrapper>
       </List>
     </NavWrapper>
 );

@@ -1,30 +1,47 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { Grid } from '@mui/material';
-import { db } from '../../firebase-config';
+import React, { useEffect, useCallback } from 'react';
+import { Grid, Typography, styled } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import QuizItem from './QuizItem';
+import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { quizesThunks } from '../../store/services/quizes';
+
+const ProgressWrap = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '400px',
+  width: '100%'
+}));
 
 const QuizItems = () => {
-  const [quizInfo, setQuizInfo] = useState([]);
-  const quizesCollectionRef = collection(db, 'quizes');
+  const { quizes, status, error } = useAppSelector((state) => state.quizesReducer);
+  const dispatch = useAppDispatch();
+
+  const fetchData = useCallback(async () => {
+    try {
+      await dispatch(quizesThunks.fetchQuizes());
+    } catch (e) {
+      // eslint-disable-next-line
+      console.error(e);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    const getQuizes = async () => {
-      const data = await getDocs(quizesCollectionRef);
-      setQuizInfo(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getQuizes();
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  const isNetworkOk = error !== 'Network Error' && status !== 'failed';
+
+  if (!isNetworkOk) return <Grid><Typography variant="h3">{error}</Typography></Grid>;
+  if (isNetworkOk && status === 'loading') return (<ProgressWrap><CircularProgress color="inherit"/></ProgressWrap>);
 
   return (
     <Grid container spacing={2} sx={{ alignItems: 'stretch', paddingTop: 2, paddingBottom: 4 }}>
-      {quizInfo.map((item) => (
+      {quizes.map((item) => (
         <Grid item xs={12} sm={6} md={4} key={item.id}>
           <QuizItem item={item} />
-        </Grid>
-      ))}
+        </Grid>))
+      }
     </Grid>
   );
 };
