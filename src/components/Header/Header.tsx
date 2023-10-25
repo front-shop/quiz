@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ThemeToggler from '../ThemeToggler';
+import ThemeToggler from '../ThemeToggler/ThemeToggler';
 import Navbar from '../Navbar/Navbar';
 import { DRAWERWIDTH } from '../../constants/constants';
 import logo from '../../logo.svg';

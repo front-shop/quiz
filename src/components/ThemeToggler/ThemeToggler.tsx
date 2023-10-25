@@ -1,17 +1,12 @@
 import React from 'react';
-import { IconButton, styled } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import ColorModeContext from '../config/color-context';
+import ColorModeContext from '../../config/color-context';
+import { ThemeToglerWrapper } from './styled';
 
-const ThemeToglerWrapper = styled('div')(() => ({
-  position: 'absolute',
-  top: '12px',
-  right: '15px'
-}));
-
-export default function ThemeToggler() {
+const ThemeToggler = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   return (
@@ -21,4 +16,6 @@ export default function ThemeToggler() {
       </IconButton>
     </ThemeToglerWrapper>
   );
-}
+};
+
+export default ThemeToggler;

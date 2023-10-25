@@ -1,12 +1,6 @@
 import React from 'react';
-import { Typography, styled } from '@mui/material';
-
-const SearchWrapper = styled('div')(({ theme }) => ({
-  [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(1),
-    border: '1px solid #ccc'
-  }
-}));
+import Typography from '@mui/material/Typography';
+import { SearchWrapper } from './style';
 
 const Search = () => (
     <SearchWrapper>
