@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react';
 import { Grid, Typography, styled } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import QuizItem from './QuizItem';
+import QuizItem from './QuizItem/QuizItem';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { quizesThunks } from '../../store/services/quizes';
 
