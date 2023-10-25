@@ -1,20 +1,16 @@
 import React from 'react';
-import { useRouteError } from 'react-router-dom';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import routes from '../../constants/routes';
 
-const NotFound = () => {
-  const error = useRouteError() as Error;
-  console.log('err', error);
-
-  return (
+const NotFound = () => (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        minHeight: '100vh',
-        backgroundColor: 'background.default'
+        minHeight: '100vh'
       }}
     >
       <Typography variant="h2">Oops!</Typography>
@@ -25,8 +21,11 @@ const NotFound = () => {
       >
         The page you’re looking for doesn’t exist.
       </Typography>
-      <Button variant="outlined" href="/" color="secondary">Back Home</Button>
+      <Link
+        to={`/${routes.homepage}`}
+        color="secondary">
+          Back Home
+      </Link>
     </Box>
-  );
-};
+);
 export default NotFound;
