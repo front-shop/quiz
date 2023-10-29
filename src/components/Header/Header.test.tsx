@@ -13,19 +13,17 @@ describe('Header component', () => {
   };
   it('renders logo', () => {
     renderHeader();
+
     const logo = screen.getByAltText('logo');
     expect(logo).toBeInTheDocument();
   });
 
-  it('renders burger icon menu', () => {
-    renderHeader();
-    const burgerIcon = screen.getByLabelText('open mobile menu');
-    expect(burgerIcon).toBeInTheDocument();
-  });
-
   it('navbar opens on burgerMenuIcon click', () => {
     renderHeader();
+
     const burgerMenuIcon = screen.getByLabelText('open mobile menu');
+    expect(burgerMenuIcon).toBeInTheDocument();
+
     fireEvent.click(burgerMenuIcon);
     const drawerContent = screen.getByRole('heading', { level: 6, name: /QUIZ/ });
     expect(drawerContent).toBeInTheDocument();
