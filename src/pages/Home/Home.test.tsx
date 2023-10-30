@@ -4,8 +4,11 @@ import { Provider } from 'react-redux';
 import Home from './Home';
 import { store } from '../../store/store';
 
-jest.mock('../../components/Quiz/QuizItems', () => function MockInfo() {
+jest.mock('../../components/Quiz/QuizItems/QuizItems', () => function MockInfo() {
   return <div>Test QuizItems component</div>;
+});
+jest.mock('../../components/Quiz/QuizItem/QuizItem', () => function MockInfo() {
+  return <div>Test QuizItem component</div>;
 });
 
 describe('Home Component', () => {
