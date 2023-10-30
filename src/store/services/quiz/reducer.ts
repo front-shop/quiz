@@ -3,6 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { moduleName, IQuizItem } from './constant';
 import thunks from './thunks';
 
+const initialQuiz:IQuizItem = {
+  id: '',
+  img: '',
+  title: '',
+  description: ''
+};
+
 enum EStatusType {
   Idle = 'idle',
   Loading = 'loading',
@@ -11,13 +18,15 @@ enum EStatusType {
 }
 
 interface IInitialState {
-  quizes: IQuizItem[];
+  quizes: IQuizItem[] | [];
+  quiz: IQuizItem;
   status: EStatusType;
   error: string | null;
 }
 
 const initialState: IInitialState = {
   quizes: [],
+  quiz: initialQuiz,
   status: EStatusType.Idle,
   error: null
 };
@@ -40,6 +49,14 @@ export const quizesReducer = createSlice({
     builder.addCase(thunks.fetchQuizes.rejected, (state, action) => {
       state.status = EStatusType.Failed;
       state.error = action.error.message || 'Something went wrong';
+    });
+    builder.addCase(thunks.fetchQuiz.fulfilled, (state, action) => {
+      console.log('satae', state, 'action', action.payload);
+      if (!action.payload) {
+        return;
+      }
+      state.quiz = action.payload;
+      console.log('state.quiz', state.quiz);
     });
   }
 });

@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import noImage from '../../../assets/images/no-image.jpg';
-import { IQuizItem } from '../../../store/services/quizes/constant';
+import { IQuizItem } from '../../../store/services/quiz/constant';
 import routes from '../../../constants/routes';
 import { CardActionAreaInner, CardStyled, CardActionsStyled } from './styled';
 

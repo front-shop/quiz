@@ -1,11 +1,10 @@
 import React, { useEffect, useCallback } from 'react';
 import { Grid, Typography } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
 import QuizItem from '../QuizItem/QuizItem';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
-import { quizesThunks } from '../../../store/services/quizes';
-import { ProgressWrap } from './styled';
-import { IQuizItem } from '../../../store/services/quizes/constant';
+import { quizesThunks } from '../../../store/services/quiz';
+import Preloader from '../../common/Preloader';
+import { IQuizItem } from '../../../store/services/quiz/constant';
 
 const QuizItems = () => {
   const { quizes, status, error } = useAppSelector((state) => state.quizesReducer);
@@ -26,7 +25,7 @@ const QuizItems = () => {
   const isNetworkOk = error !== 'Network Error' && status !== 'failed';
 
   if (!isNetworkOk) return <Grid><Typography variant="h3">{error}</Typography></Grid>;
-  if (isNetworkOk && status === 'loading') return (<ProgressWrap><CircularProgress color="inherit"/></ProgressWrap>);
+  if (isNetworkOk && status === 'loading') return (<Preloader/>);
 
   return (
     <Grid container spacing={2} sx={{ alignItems: 'stretch', paddingTop: 2, paddingBottom: 4 }}>

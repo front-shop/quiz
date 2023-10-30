@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'; // Assuming you are using Redux
 import QuizItems from './QuizItems';
 import { useAppSelector } from '../../../hooks/hooks';
 import { store } from '../../../store/store';
-import { IQuizItem } from '../../../store/services/quizes/constant';
+import { IQuizItem } from '../../../store/services/quiz/constant';
 
 // Mock the necessary dependencies
 jest.mock('../../../hooks/hooks', () => ({

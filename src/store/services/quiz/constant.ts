@@ -1,7 +1,7 @@
 export const moduleName = 'quizes';
 
 export interface IQuizItem {
-  id: string,
+  id?: string,
   img?: string,
   title?: string,
   description?: string,
