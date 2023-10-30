@@ -7,7 +7,8 @@ const initialQuiz:IQuizItem = {
   id: '',
   img: '',
   title: '',
-  description: ''
+  description: '',
+  questions: []
 };
 
 enum EStatusType {

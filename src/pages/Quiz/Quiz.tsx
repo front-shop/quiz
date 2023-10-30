@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Container, Typography, Divider, CardMedia, Button, Box,
@@ -13,7 +13,7 @@ const Quiz = () => {
   const locationParams = useLocation();
   const { quiz, status } = useAppSelector((state) => state.quizesReducer);
   const dispatch = useAppDispatch();
-  console.log('quiz', quiz, locationParams);
+  const [activeQuestion, setActiveQuestion] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -31,6 +31,7 @@ const Quiz = () => {
 
   const handleNexQuestion = () => {
     console.log('next quiz question');
+    setActiveQuestion((prev) => prev + 1);
   };
 
   if (status === 'loading') return (<Preloader />);
@@ -55,23 +56,24 @@ const Quiz = () => {
         <Button variant="outlined" size="medium" onClick={handleStartQuiz}>Start the {quiz.title} Quiz</Button>
       </Box>
       <Box>
-      <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
+      {(quiz.questions?.length) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
         <CardContent>
         <FormControl sx={{ width: '100%' }}>
           <FormLabel
             id="demo-radio-buttons-group-label"
             sx={{ paddingBottom: '16px', fontSize: '1.2rem' }}>
-              Gender
+              {quiz.questions && quiz.questions[activeQuestion].question}
           </FormLabel>
           <Divider sx={{ marginBottom: '16px' }}/>
           <RadioGroup
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="question 1"
+            defaultValue={quiz.questions[activeQuestion].choices[0]}
             name="radio-buttons-group"
           >
-            <FormControlLabel value="question 1" control={<Radio />} label="question 1" />
-            <FormControlLabel value="question 2" control={<Radio />} label="question 2" />
-            <FormControlLabel value="question 3" control={<Radio />} label="question 3" />
+          {quiz.questions[activeQuestion].choices.map((el) => {
+            console.log('el', el);
+            return <FormControlLabel value={el} control={<Radio />} label={el} key={el} />;
+          })}
           </RadioGroup>
         </FormControl>
         </CardContent>
@@ -86,7 +88,7 @@ const Quiz = () => {
               Next
           </Button>
         </CardActions>
-      </Card>
+      </Card>}
       </Box>
     </Container>
   );
