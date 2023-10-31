@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container, Typography, Divider, CardMedia, Button, Box,
   Card, CardActions, CardContent, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
 } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Preloader from '../../components/common/Preloader';
 import { quizesThunks } from '../../store/services/quiz/index';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 
 const Quiz = () => {
   const locationParams = useLocation();
-  const { quiz, status } = useAppSelector((state) => state.quizesReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { quiz, status } = useAppSelector((state) => state.quizesReducer);
   const [activeQuestion, setActiveQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
+  const questionsLength = quiz.questions?.length;
+
+  console.log('selectedAnswer', selectedAnswer);
 
   useEffect(() => {
     (async () => {
@@ -32,6 +38,15 @@ const Quiz = () => {
   const handleNexQuestion = () => {
     console.log('next quiz question');
     setActiveQuestion((prev) => prev + 1);
+  };
+
+  const handleOptionChange = (e: React.SyntheticEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setSelectedAnswer((prevAnswer) => [...prevAnswer, target.value]);
+  };
+
+  const handleFinishQuiz = () => {
+    navigate('/');
   };
 
   if (status === 'loading') return (<Preloader />);
@@ -60,26 +75,30 @@ const Quiz = () => {
         <CardContent>
         <FormControl sx={{ width: '100%' }}>
           <FormLabel
-            id="demo-radio-buttons-group-label"
+            id={quiz.title}
             sx={{ paddingBottom: '16px', fontSize: '1.2rem' }}>
               {quiz.questions && quiz.questions[activeQuestion].question}
           </FormLabel>
           <Divider sx={{ marginBottom: '16px' }}/>
           <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue={quiz.questions[activeQuestion].choices[0]}
+            aria-labelledby={quiz.title}
             name="radio-buttons-group"
           >
           {quiz.questions[activeQuestion].choices.map((el) => {
             console.log('el', el);
-            return <FormControlLabel value={el} control={<Radio />} label={el} key={el} />;
+            return <FormControlLabel
+              value={el}
+              control={<Radio onChange={handleOptionChange}/>}
+              label={el}
+              key={el} />;
           })}
           </RadioGroup>
         </FormControl>
         </CardContent>
         <Divider />
         <CardActions sx={{ padding: '16px', justifyContent: 'flex-end' }}>
-          <Button
+          {(questionsLength && activeQuestion < (questionsLength - 1))
+            ? <Button
             variant="outlined"
             size="medium"
             onClick={handleNexQuestion}
@@ -87,6 +106,15 @@ const Quiz = () => {
             >
               Next
           </Button>
+            : <Button
+            variant="outlined"
+            size="medium"
+            onClick={handleFinishQuiz}
+            endIcon={<CheckCircleIcon />}
+            >
+              Finish
+          </Button>
+        }
         </CardActions>
       </Card>}
       </Box>
