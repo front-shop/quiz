@@ -17,6 +17,7 @@ const Quiz = () => {
   const { quiz, status } = useAppSelector((state) => state.quizesReducer);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
+  const [answer, setAnswer] = useState(false);
   const questionsLength = quiz.questions?.length;
 
   console.log('selectedAnswer', selectedAnswer);
@@ -31,17 +32,14 @@ const Quiz = () => {
     })();
   }, []);
 
-  const handleStartQuiz = () => {
-    console.log('start quiz');
-  };
-
   const handleNexQuestion = () => {
-    console.log('next quiz question');
     setActiveQuestion((prev) => prev + 1);
+    setAnswer(false);
   };
 
   const handleOptionChange = (e: React.SyntheticEvent): void => {
     const target = e.target as HTMLInputElement;
+    setAnswer(true);
     setSelectedAnswer((prevAnswer) => [...prevAnswer, target.value]);
   };
 
@@ -67,10 +65,7 @@ const Quiz = () => {
         {quiz.description}
       </Typography>
       <Divider />
-      <Box p="24px 0" textAlign='center'>
-        <Button variant="outlined" size="medium" onClick={handleStartQuiz}>Start the {quiz.title} Quiz</Button>
-      </Box>
-      <Box>
+      <Box mt="32px">
       {(quiz.questions?.length) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
         <CardContent>
         <FormControl sx={{ width: '100%' }}>
@@ -103,6 +98,7 @@ const Quiz = () => {
             size="medium"
             onClick={handleNexQuestion}
             endIcon={<ArrowForwardIosIcon />}
+            disabled={!answer}
             >
               Next
           </Button>
@@ -111,6 +107,7 @@ const Quiz = () => {
             size="medium"
             onClick={handleFinishQuiz}
             endIcon={<CheckCircleIcon />}
+            disabled={!answer}
             >
               Finish
           </Button>
