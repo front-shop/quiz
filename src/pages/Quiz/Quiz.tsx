@@ -9,6 +9,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Preloader from '../../components/common/Preloader';
 import { quizesThunks } from '../../store/services/quiz/index';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import routes from '../../routes/routes';
 
 const Quiz = () => {
   const locationParams = useLocation();
@@ -19,7 +20,7 @@ const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
   const [answer, setAnswer] = useState(false);
   const questionsLength = quiz.questions?.length;
-
+  // TODO remove console
   console.log('selectedAnswer', selectedAnswer);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Quiz = () => {
   };
 
   const handleFinishQuiz = () => {
-    navigate('/');
+    navigate(`/${routes.quiz.resultPage}`);
   };
 
   if (status === 'loading') return (<Preloader />);
