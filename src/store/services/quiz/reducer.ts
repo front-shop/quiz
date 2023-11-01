@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 // import type { PayloadAction } from '@reduxjs/toolkit';
-import { moduleName, IQuizItem } from './constant';
+import { moduleName, IQuizItem, EStatusType } from './constant';
 import thunks from './thunks';
 
 const initialQuiz:IQuizItem = {
@@ -10,13 +10,6 @@ const initialQuiz:IQuizItem = {
   description: '',
   questions: []
 };
-
-enum EStatusType {
-  Idle = 'idle',
-  Loading = 'loading',
-  Success = 'success',
-  Failed = 'failed'
-}
 
 interface IInitialState {
   quizes: IQuizItem[] | [];

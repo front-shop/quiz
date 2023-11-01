@@ -12,3 +12,10 @@ export interface IQuizItem {
   description?: string,
   questions?: IQuestion[] | []
 }
+
+export enum EStatusType {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Failed = 'failed'
+}
