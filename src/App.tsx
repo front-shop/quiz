@@ -8,6 +8,8 @@ import NotFound from './pages/NotFound/NotFound';
 import Quiz from './pages/Quiz/Quiz';
 import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
+import QuizResult from './pages/QuizResult/QuizResult';
+import routes from './routes/routes';
 import './App.css';
 
 const App = () => {
@@ -25,10 +27,11 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path={routes.homepage} element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/quiz/:id" element={<Quiz />} />
-              <Route path="/about" element={<About />} />
+              <Route path={`${routes.quiz.key}/:id`} element={<Quiz />} />
+              <Route path={routes.about} element={<About />} />
+              <Route path={routes.quiz.resultPage} element={<QuizResult />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

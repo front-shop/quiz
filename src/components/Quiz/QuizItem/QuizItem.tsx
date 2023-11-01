@@ -5,12 +5,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import noImage from '../../../assets/images/no-image.jpg';
 import { IQuizItem } from '../../../store/services/quiz/constant';
-import routes from '../../../constants/routes';
+import routes from '../../../routes/routes';
 import { CardActionAreaInner, CardStyled, CardActionsStyled } from './styled';
 
 const QuizItem = ({ item }: { item: IQuizItem }) => (
     <CardStyled sx={{ height: '100%' }}>
-      <Link to={`/${routes.quiz.key}/${item.title}`} state={{ quizId: item.id }}>
+      <Link to={`${routes.quiz.key}/${item.title}`} state={{ quizId: item.id }}>
         <CardActionAreaInner>
           <CardMedia
             component="img"

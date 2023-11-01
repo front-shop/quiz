@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
-import routes from '../../constants/routes';
+import routes from '../../routes/routes';
 import { NavWrapper, ListItemWrapper } from './styled';
 
 const Navbar = () => (

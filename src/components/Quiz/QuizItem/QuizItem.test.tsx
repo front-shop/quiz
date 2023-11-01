@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import QuizItem from './QuizItem';
-import routes from '../../../constants/routes';
+import routes from '../../../routes/routes';
 
 const mockItem = {
   id: '1',

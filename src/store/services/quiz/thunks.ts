@@ -3,7 +3,7 @@ import {
   collection, getDocs, doc, getDoc
 } from 'firebase/firestore';
 import { moduleName } from './constant';
-import { db } from '../../../firebase-config';
+import { db } from '../../../config/firebase';
 
 const quizesCollectionRef = collection(db, 'quizes');
 const fetchQuizes = createAsyncThunk(`${moduleName}/fetchQuizes`, async () => {

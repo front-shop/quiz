@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import routes from '../../constants/routes';
+import routes from '../../routes/routes';
 
 const NotFound = () => (
     <Box
