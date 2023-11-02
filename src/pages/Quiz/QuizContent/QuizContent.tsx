@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Divider, Button, Box,
   Card, CardActions, CardContent, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
@@ -9,6 +9,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Preloader from '../../../components/common/Preloader';
 import routes from '../../../routes/routes';
 import { IQuizItem, EStatusType } from '../../../store/services/quiz/constant';
+import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
+import { quizesThunks } from '../../../store/services/quiz/index';
 
 type QuizContentProps = {
   quiz: IQuizItem;
@@ -16,15 +18,18 @@ type QuizContentProps = {
 };
 
 const QuizContent = ({ quiz, status }: QuizContentProps) => {
-  const { questions } = quiz;
+  const locationParams = useLocation();
+  const { questions, title, id } = quiz;
   const navigate = useNavigate();
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
   const [answer, setAnswer] = useState(false);
   const questionsLength = quiz.questions?.length;
   const ifLastQuestion = questionsLength && activeQuestion < (questionsLength - 1);
+  const dispatch = useAppDispatch();
+  const { answerResult } = useAppSelector((state) => state.quizesReducer);
   // TODO remove console
-  console.log('selectedAnswer', selectedAnswer, questions);
+  console.log('selectedAnswer', selectedAnswer, questions, 'answerResult', answerResult);
 
   const handleNexQuestion = () => {
     setActiveQuestion((prev) => prev + 1);
@@ -37,8 +42,10 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
     setSelectedAnswer((prevAnswer) => [...prevAnswer, target.value]);
   };
 
-  const handleFinishQuiz = () => {
-    navigate(`/${routes.quiz.resultPage}`);
+  const handleFinishQuiz = async () => {
+    await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
+    console.log(' 111 answerResult', answerResult, 'selectedAnswer', selectedAnswer);
+    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id } });
   };
 
   if (status === 'loading') return (<Preloader />);

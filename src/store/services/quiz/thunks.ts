@@ -17,7 +17,15 @@ const fetchQuiz = createAsyncThunk(`${moduleName}/fetchQuiz`, async (quizId: str
   return quizInfo.exists() ? quizInfo.data() : console.log('No such quiz!');
 });
 
+const getAnswers = createAsyncThunk(`${moduleName}/getAnswers`, async (quizId: string) => {
+  const docRef = doc(db, 'answers', quizId);
+  const answersInfo = await getDoc(docRef);
+  console.log('answersInfo', answersInfo.data());
+  return answersInfo.exists() ? answersInfo.data() : console.log('No such quiz!');
+});
+
 export default {
   fetchQuizes,
-  fetchQuiz
+  fetchQuiz,
+  getAnswers
 };

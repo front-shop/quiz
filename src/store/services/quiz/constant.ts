@@ -10,7 +10,8 @@ export interface IQuizItem {
   img?: string,
   title?: string,
   description?: string,
-  questions?: IQuestion[] | []
+  questions?: IQuestion[] | [],
+  answerResult?: string[] | []
 }
 
 export enum EStatusType {

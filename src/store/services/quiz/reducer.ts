@@ -16,13 +16,15 @@ interface IInitialState {
   quiz: IQuizItem;
   status: EStatusType;
   error: string | null;
+  answerResult: string[] | [];
 }
 
 const initialState: IInitialState = {
   quizes: [],
   quiz: initialQuiz,
   status: EStatusType.Idle,
-  error: null
+  error: null,
+  answerResult: []
 };
 
 export const quizesReducer = createSlice({
@@ -45,12 +47,20 @@ export const quizesReducer = createSlice({
       state.error = action.error.message || 'Something went wrong';
     });
     builder.addCase(thunks.fetchQuiz.fulfilled, (state, action) => {
-      console.log('satae', state, 'action', action.payload);
       if (!action.payload) {
         return;
       }
       state.quiz = action.payload;
       console.log('state.quiz', state.quiz);
+    });
+    builder.addCase(thunks.getAnswers.fulfilled, (state, action) => {
+      console.log('state, action', state, action);
+      if (!action.payload) {
+        return;
+      }
+      // const answer = action.payload.answer;
+      state.answerResult = action.payload.answer;
+      console.log('state.quiz answer', state.quiz, action.payload.answer);
     });
   }
 });

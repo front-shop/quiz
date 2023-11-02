@@ -27,7 +27,10 @@ const Quiz = () => {
 
   return (
     <Container sx={{ height: '100%' }}>
-      <QuizInfo quiz={quiz}/>
+      <QuizInfo
+        quizImg={quiz.img}
+        quizTitle={quiz.title}
+        quizDescription={quiz.description}/>
       {quiz.questions ? <QuizContent quiz={quiz} status={status}/> : <QuizNoContent />}
     </Container>
   );

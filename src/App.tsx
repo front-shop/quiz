@@ -31,7 +31,7 @@ const App = () => {
               <Route index element={<Home />} />
               <Route path={`${routes.quiz.key}/:id`} element={<Quiz />} />
               <Route path={routes.about} element={<About />} />
-              <Route path={routes.quiz.resultPage} element={<QuizResult />} />
+              <Route path={`${routes.quiz.key}/:id/${routes.quiz.resultPage}`} element={<QuizResult />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
