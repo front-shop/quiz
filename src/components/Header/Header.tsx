@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ThemeToggler from '../ThemeToggler';
+import ThemeToggler from '../ThemeToggler/ThemeToggler';
 import Navbar from '../Navbar/Navbar';
 import { DRAWERWIDTH } from '../../constants/constants';
 import logo from '../../logo.svg';
@@ -21,13 +21,13 @@ const Header = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} data-testid="header">
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="open mobile menu"
             edge="start"
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
@@ -52,9 +52,6 @@ const Header = () => {
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true
-        }}
         sx={{
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWERWIDTH }

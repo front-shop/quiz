@@ -1,6 +1,7 @@
 export default {
   quiz: {
-    key: 'quiz'
+    key: 'quiz',
+    resultPage: 'result'
   },
   homepage: '',
   about: 'about'
