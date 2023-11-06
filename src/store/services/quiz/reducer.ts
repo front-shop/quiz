@@ -51,7 +51,6 @@ export const quizesReducer = createSlice({
         return;
       }
       state.quiz = action.payload;
-      console.log('state.quiz', state.quiz);
     });
     builder.addCase(thunks.getAnswers.fulfilled, (state, action) => {
       console.log('state, action', state, action);
