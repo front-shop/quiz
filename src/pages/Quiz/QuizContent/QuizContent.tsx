@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Divider, Button, Box,
-  Card, CardActions, CardContent, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
+  Card, CardActions, CardContent, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Typography
 } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Preloader from '../../../components/common/Preloader';
 import routes from '../../../routes/routes';
@@ -21,30 +22,55 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const locationParams = useLocation();
   const { questions, title, id } = quiz;
   const navigate = useNavigate();
-  const [activeQuestion, setActiveQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
-  const [answer, setAnswer] = useState(false);
-  const questionsLength = quiz.questions?.length;
-  const ifLastQuestion = questionsLength && activeQuestion < (questionsLength - 1);
+
   const dispatch = useAppDispatch();
   const { answerResult } = useAppSelector((state) => state.quizesReducer);
+
+  const [checkedAnswer, setCheckedAnswer] = useState('');
+  const [activeQuestion, setActiveQuestion] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [isAnswered, setIsAnswered] = useState(false);
+
+  const isQuestionsLength = questions?.length;
+  const isLastQuestion = isQuestionsLength && activeQuestion < (isQuestionsLength - 1);
+
   // TODO remove console
-  console.log('selectedAnswer', selectedAnswer, questions, 'answerResult', answerResult);
+  console.log('answerResult', answerResult);
 
   const handleNexQuestion = () => {
+    if (selectedAnswers.length > activeQuestion + 1) {
+      setIsAnswered(true);
+      setCheckedAnswer(selectedAnswers[activeQuestion + 1]);
+    } else {
+      setIsAnswered(false);
+    }
     setActiveQuestion((prev) => prev + 1);
-    setAnswer(false);
   };
 
-  const handleOptionChange = (e: React.SyntheticEvent): void => {
-    const target = e.target as HTMLInputElement;
-    setAnswer(true);
-    setSelectedAnswer((prevAnswer) => [...prevAnswer, target.value]);
+  const handlePrevQuestion = () => {
+    setCheckedAnswer(selectedAnswers[activeQuestion - 1]);
+    setActiveQuestion((prev) => prev - 1);
+    setIsAnswered(true);
+  };
+
+  const handleOptionChange = (el: string): void => {
+    setSelectedAnswers((prevAnswer) => {
+      if (selectedAnswers.length > activeQuestion + 1) {
+        prevAnswer.splice(activeQuestion, 1, el);
+        return prevAnswer;
+      }
+      return [...prevAnswer, el];
+    });
+    if (selectedAnswers.length >= activeQuestion) {
+      setIsAnswered(true);
+    } else {
+      setIsAnswered(false);
+    }
+    setCheckedAnswer(el);
   };
 
   const handleFinishQuiz = async () => {
     await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
-    console.log(' 111 answerResult', answerResult, 'selectedAnswer', selectedAnswer);
     navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id } });
   };
 
@@ -52,8 +78,11 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
 
   return (
       <Box mt="32px">
-      {(quiz.questions?.length) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
+      {(isQuestionsLength) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
         <CardContent>
+        <Typography variant="body1" pb="16px">
+          {`${activeQuestion + 1} / ${questions.length + 1}`}
+        </Typography>
           <FormControl sx={{ width: '100%' }}>
             <FormLabel
               id={quiz.title}
@@ -65,25 +94,39 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
               aria-labelledby={quiz.title}
               name="radio-buttons-group"
             >
-            {quiz.questions[activeQuestion].choices.map((el) => <FormControlLabel
-              value={el}
-              control={<Radio onChange={handleOptionChange}/>}
-              label={el}
-              key={el} />)}
+            {questions[activeQuestion].choices.map((el) => <FormControlLabel
+                value={el}
+                checked={checkedAnswer === el}
+                onChange={() => handleOptionChange(el)}
+                control={<Radio />}
+                key={el}
+                label={el}/>)}
             </RadioGroup>
           </FormControl>
         </CardContent>
         <Divider />
-        <CardActions sx={{ padding: '16px', justifyContent: 'flex-end' }}>
-          <Button
-            variant="outlined"
-            size="medium"
-            onClick={ifLastQuestion ? handleNexQuestion : handleFinishQuiz}
-            endIcon={ifLastQuestion ? <ArrowForwardIosIcon /> : <CheckCircleIcon />}
-            disabled={!answer}
-            >
-              {ifLastQuestion ? 'Next' : 'Finish'}
-          </Button>
+        <CardActions sx={{ padding: '16px' }}>
+          {activeQuestion > 0 && <Box sx={{ marginRight: 'auto' }}>
+            <Button
+              variant="outlined"
+              size="medium"
+              onClick={handlePrevQuestion}
+              startIcon={<ArrowBackIosIcon /> }
+              >
+                Previous
+            </Button>
+          </Box>}
+          <Box sx={{ marginLeft: 'auto' }}>
+            <Button
+              variant="outlined"
+              size="medium"
+              onClick={isLastQuestion ? handleNexQuestion : handleFinishQuiz}
+              endIcon={isLastQuestion ? <ArrowForwardIosIcon /> : <CheckCircleIcon />}
+              disabled={!isAnswered}
+              >
+                {isLastQuestion ? 'Next' : 'Finish'}
+            </Button>
+          </Box>
         </CardActions>
       </Card>}
       </Box>
