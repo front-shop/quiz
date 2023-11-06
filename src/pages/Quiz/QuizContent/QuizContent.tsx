@@ -12,6 +12,7 @@ import routes from '../../../routes/routes';
 import { IQuizItem, EStatusType } from '../../../store/services/quiz/constant';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import { quizesThunks } from '../../../store/services/quiz/index';
+import calculatePersentage from '../../../utils/calculatePersetage';
 
 type QuizContentProps = {
   quiz: IQuizItem;
@@ -31,11 +32,8 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  const isQuestionsLength = questions?.length;
-  const isLastQuestion = isQuestionsLength && activeQuestion < (isQuestionsLength - 1);
-
-  // TODO remove console
-  console.log('answerResult', answerResult);
+  const questionsLength = questions?.length;
+  const isLastQuestion = questionsLength && activeQuestion < (questionsLength - 1);
 
   const handleNexQuestion = () => {
     if (selectedAnswers.length > activeQuestion + 1) {
@@ -71,17 +69,19 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
 
   const handleFinishQuiz = async () => {
     await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
-    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id } });
+    const totalArr = new Set(selectedAnswers.concat(answerResult));
+    const result = calculatePersentage(Number(questionsLength), totalArr.size);
+    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: result } });
   };
 
   if (status === 'loading') return (<Preloader />);
 
   return (
       <Box mt="32px">
-      {(isQuestionsLength) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
+      {(questionsLength) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
         <CardContent>
         <Typography variant="body1" pb="16px">
-          {`${activeQuestion + 1} / ${questions.length + 1}`}
+          {`${activeQuestion + 1} / ${questions.length}`}
         </Typography>
           <FormControl sx={{ width: '100%' }}>
             <FormLabel
@@ -128,8 +128,9 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
             </Button>
           </Box>
         </CardActions>
-      </Card>}
-      </Box>
+      </Card>
+      }
+    </Box>
   );
 };
 export default QuizContent;
