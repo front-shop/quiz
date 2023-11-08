@@ -13,6 +13,7 @@ import { IQuizItem, EStatusType } from '../../../store/services/quiz/constant';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import { quizesThunks } from '../../../store/services/quiz/index';
 import calculatePersentage from '../../../utils/calculatePersetage';
+import Timer from '../../../components/Timer/Timer';
 
 type QuizContentProps = {
   quiz: IQuizItem;
@@ -23,6 +24,8 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const locationParams = useLocation();
   const { questions, title, id } = quiz;
   const navigate = useNavigate();
+  // TODO get Time from form
+  const TIMERTIME = 30;
 
   const dispatch = useAppDispatch();
   const { answerResult } = useAppSelector((state) => state.quizesReducer);
@@ -74,11 +77,16 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
     navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: result } });
   };
 
+  const finishedTimer = () => {
+    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: 0 } });
+  };
+
   if (status === 'loading') return (<Preloader />);
 
   return (
       <Box mt="32px">
       {(questionsLength) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
+        <Timer time={TIMERTIME} finishedTimer={finishedTimer} />
         <CardContent>
         <Typography variant="body1" pb="16px">
           {`${activeQuestion + 1} / ${questions.length}`}
