@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Typography } from '@mui/material';
 import { TimeBox } from './styled';
 
@@ -10,6 +10,7 @@ type TimerProps = {
 const Timer = ({ time, finishedTimer }: TimerProps) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const timer = (timeInMinutes: number, endTimer: () => void) => {
     let sec: number = 0;
@@ -30,10 +31,16 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
       }
       setSeconds(sec);
     }, 1000);
+    intervalRef.current = timerId;
+  };
+
+  const clearTimer = () => {
+    clearInterval(intervalRef.current as NodeJS.Timeout);
   };
 
   useEffect(() => {
     timer(time, finishedTimer);
+    return () => clearTimer();
   }, []);
 
   return (

@@ -31,38 +31,38 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const { answerResult } = useAppSelector((state) => state.quizesReducer);
 
   const [checkedAnswer, setCheckedAnswer] = useState('');
-  const [activeQuestion, setActiveQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [selectedAnswerList, setSelectedAnswerList] = useState<string[]>([]);
   const [isAnswered, setIsAnswered] = useState(false);
 
   const questionsLength = questions?.length;
-  const isLastQuestion = questionsLength && activeQuestion < (questionsLength - 1);
+  const isLastQuestion = questionsLength && activeQuestionIndex < (questionsLength - 1);
 
   const handleNexQuestion = () => {
-    if (selectedAnswers.length > activeQuestion + 1) {
+    if (selectedAnswerList.length > activeQuestionIndex + 1) {
       setIsAnswered(true);
-      setCheckedAnswer(selectedAnswers[activeQuestion + 1]);
+      setCheckedAnswer(selectedAnswerList[activeQuestionIndex + 1]);
     } else {
       setIsAnswered(false);
     }
-    setActiveQuestion((prev) => prev + 1);
+    setActiveQuestionIndex((prev) => prev + 1);
   };
 
   const handlePrevQuestion = () => {
-    setCheckedAnswer(selectedAnswers[activeQuestion - 1]);
-    setActiveQuestion((prev) => prev - 1);
+    setCheckedAnswer(selectedAnswerList[activeQuestionIndex - 1]);
+    setActiveQuestionIndex((prev) => prev - 1);
     setIsAnswered(true);
   };
 
   const handleOptionChange = (el: string): void => {
-    setSelectedAnswers((prevAnswer) => {
-      if (selectedAnswers.length > activeQuestion + 1) {
-        prevAnswer.splice(activeQuestion, 1, el);
+    setSelectedAnswerList((prevAnswer) => {
+      if (selectedAnswerList.length > activeQuestionIndex + 1) {
+        prevAnswer.splice(activeQuestionIndex, 1, el);
         return prevAnswer;
       }
       return [...prevAnswer, el];
     });
-    if (selectedAnswers.length >= activeQuestion) {
+    if (selectedAnswerList.length >= activeQuestionIndex) {
       setIsAnswered(true);
     } else {
       setIsAnswered(false);
@@ -72,7 +72,7 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
 
   const handleFinishQuiz = async () => {
     await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
-    const totalArr = new Set(selectedAnswers.concat(answerResult));
+    const totalArr = new Set(selectedAnswerList.concat(answerResult));
     const result = calculatePersentage(Number(questionsLength), totalArr.size);
     navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: result } });
   };
@@ -89,20 +89,20 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
         <Timer time={TIMERTIME} finishedTimer={finishedTimer} />
         <CardContent>
         <Typography variant="body1" pb="16px">
-          {`${activeQuestion + 1} / ${questions.length}`}
+          {`${activeQuestionIndex + 1} / ${questions.length}`}
         </Typography>
           <FormControl sx={{ width: '100%' }}>
             <FormLabel
               id={quiz.title}
               sx={{ paddingBottom: '16px', fontSize: '1.2rem' }}>
-                {quiz.questions && quiz.questions[activeQuestion].question}
+                {quiz.questions && quiz.questions[activeQuestionIndex].question}
             </FormLabel>
             <Divider sx={{ marginBottom: '16px' }}/>
             <RadioGroup
               aria-labelledby={quiz.title}
               name="radio-buttons-group"
             >
-            {questions[activeQuestion].choices.map((el) => <FormControlLabel
+            {questions[activeQuestionIndex].choices.map((el) => <FormControlLabel
                 value={el}
                 checked={checkedAnswer === el}
                 onChange={() => handleOptionChange(el)}
@@ -114,7 +114,7 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
         </CardContent>
         <Divider />
         <CardActions sx={{ padding: '16px' }}>
-          {activeQuestion > 0 && <Box sx={{ marginRight: 'auto' }}>
+          {activeQuestionIndex > 0 && <Box sx={{ marginRight: 'auto' }}>
             <Button
               variant="outlined"
               size="medium"
