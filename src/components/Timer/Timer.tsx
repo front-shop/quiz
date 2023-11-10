@@ -38,6 +38,8 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
   };
 
+  const renderTime = (timePeriod: number) => (timePeriod > 9 ? timePeriod : `0${timePeriod}`);
+
   useEffect(() => {
     timer(time, finishedTimer);
     return () => clearTimer();
@@ -46,11 +48,11 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
   return (
     <Typography variant="subtitle1" p={2} align='right'>
       <TimeBox>
-        {minutes > 9 ? minutes : `0${minutes}`}
+        {renderTime(minutes)}
       </TimeBox>
       :
       <TimeBox>
-        {seconds > 9 ? seconds : `0${seconds}`}
+        {renderTime(seconds)}
       </TimeBox>
     </Typography>
   );
