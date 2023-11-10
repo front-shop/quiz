@@ -16,7 +16,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
     let sec: number = 0;
     let min: number = timeInMinutes;
 
-    const timerId = setInterval(() => {
+    let timerId = setTimeout(function run() {
       if (sec === 0) {
         min -= 1;
         sec = 59;
@@ -27,7 +27,10 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
 
       if (min === 0 && sec === 0) {
         endTimer();
-        clearInterval(timerId);
+        clearTimeout(timerId);
+      } else {
+        timerId = setTimeout(run, 1000);
+        intervalRef.current = timerId;
       }
       setSeconds(sec);
     }, 1000);
@@ -35,7 +38,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
   };
 
   const clearTimer = () => {
-    clearInterval(intervalRef.current as NodeJS.Timeout);
+    clearTimeout(intervalRef.current as NodeJS.Timeout);
   };
 
   const renderTime = (timePeriod: number) => (timePeriod > 9 ? timePeriod : `0${timePeriod}`);
