@@ -12,7 +12,7 @@ import routes from '../../../routes/routes';
 import { IQuizItem, EStatusType } from '../../../store/services/quiz/constant';
 import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
 import { quizesThunks } from '../../../store/services/quiz/index';
-import calculatePersentage from '../../../utils/calculatePersetage';
+import calculateResult from '../../../utils/calculateResult';
 import Timer from '../../../components/Timer/Timer';
 
 type QuizContentProps = {
@@ -26,6 +26,7 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const navigate = useNavigate();
   // TODO get Time from form
   const TIMERTIME = 30;
+  const pathToResultPage = `/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`;
 
   const dispatch = useAppDispatch();
   const { answerResult } = useAppSelector((state) => state.quizesReducer);
@@ -33,17 +34,17 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const [checkedAnswer, setCheckedAnswer] = useState('');
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   const [selectedAnswerList, setSelectedAnswerList] = useState<string[]>([]);
-  const [isAnswered, setIsAnswered] = useState(false);
+  const [isDisabledBtn, setIsDisabledBtn] = useState(true);
 
   const questionsLength = questions?.length;
   const isLastQuestion = questionsLength && activeQuestionIndex < (questionsLength - 1);
 
   const handleNexQuestion = () => {
     if (selectedAnswerList.length > activeQuestionIndex + 1) {
-      setIsAnswered(true);
+      setIsDisabledBtn(false);
       setCheckedAnswer(selectedAnswerList[activeQuestionIndex + 1]);
     } else {
-      setIsAnswered(false);
+      setIsDisabledBtn(true);
     }
     setActiveQuestionIndex((prev) => prev + 1);
   };
@@ -51,34 +52,50 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const handlePrevQuestion = () => {
     setCheckedAnswer(selectedAnswerList[activeQuestionIndex - 1]);
     setActiveQuestionIndex((prev) => prev - 1);
-    setIsAnswered(true);
+    setIsDisabledBtn(false);
   };
 
   const handleOptionChange = (el: string): void => {
-    setSelectedAnswerList((prevAnswer) => {
-      if (selectedAnswerList.length > activeQuestionIndex + 1) {
-        prevAnswer.splice(activeQuestionIndex, 1, el);
-        return prevAnswer;
-      }
-      return [...prevAnswer, el];
-    });
     if (selectedAnswerList.length >= activeQuestionIndex) {
-      setIsAnswered(true);
+      setIsDisabledBtn(false);
     } else {
-      setIsAnswered(false);
+      setIsDisabledBtn(true);
+    }
+    if (selectedAnswerList.length === activeQuestionIndex + 1 || selectedAnswerList.length > activeQuestionIndex) {
+      setSelectedAnswerList((prevAnswer) => {
+        prevAnswer.splice(activeQuestionIndex, 1, el);
+        return [...prevAnswer];
+      });
+    } else {
+      setSelectedAnswerList([...selectedAnswerList, el]);
     }
     setCheckedAnswer(el);
   };
 
   const handleFinishQuiz = async () => {
-    await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
-    const totalArr = new Set(selectedAnswerList.concat(answerResult));
-    const result = calculatePersentage(Number(questionsLength), totalArr.size);
-    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: result } });
+    try {
+      await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
+      let correctAnswers = 0;
+      if (answerResult.length > 0) {
+        correctAnswers = selectedAnswerList.reduce((acc: number, cur: string) => {
+          if ([...answerResult].includes(cur)) {
+            // eslint-disable-next-line no-param-reassign
+            acc += 1;
+          }
+          return acc;
+        }, 0);
+      }
+      const totalResult = calculateResult(Number(questionsLength), correctAnswers);
+      navigate(pathToResultPage, { state: { quizId: id, quizResult: totalResult } });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const finishedTimer = () => {
-    navigate(`/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`, { state: { quizId: id, quizResult: 0 } });
+    // TODO add logic for finished
+    console.log('finished timer');
+    // navigate(pathToResultPage, { state: { quizId: id, quizResult: 0 } });
   };
 
   if (status === 'loading') return (<Preloader />);
@@ -130,7 +147,7 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
               size="medium"
               onClick={isLastQuestion ? handleNexQuestion : handleFinishQuiz}
               endIcon={isLastQuestion ? <ArrowForwardIosIcon /> : <CheckCircleIcon />}
-              disabled={!isAnswered}
+              disabled={isDisabledBtn}
               >
                 {isLastQuestion ? 'Next' : 'Finish'}
             </Button>
