@@ -4,7 +4,7 @@ import { TimeBox } from './styled';
 
 type TimerProps = {
   time: number;
-  finishedTimer: () => void;
+  finishedTimer: (finished: boolean) => void;
 };
 
 const Timer = ({ time, finishedTimer }: TimerProps) => {
@@ -12,7 +12,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
   const [seconds, setSeconds] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const timer = (timeInMinutes: number, endTimer: () => void) => {
+  const timer = (timeInMinutes: number) => {
     let sec: number = 0;
     let min: number = timeInMinutes;
 
@@ -26,7 +26,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
       }
 
       if (min === 0 && sec === 0) {
-        endTimer();
+        finishedTimer(true);
         clearTimeout(timerId);
       } else {
         timerId = setTimeout(run, 1000);
@@ -44,7 +44,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
   const renderTime = (timePeriod: number) => (timePeriod > 9 ? timePeriod : `0${timePeriod}`);
 
   useEffect(() => {
-    timer(time, finishedTimer);
+    timer(time);
     return () => clearTimer();
   }, []);
 

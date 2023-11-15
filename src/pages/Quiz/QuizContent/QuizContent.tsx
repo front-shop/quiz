@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Divider, Button, Box,
@@ -31,16 +31,18 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const dispatch = useAppDispatch();
   const { answerResult } = useAppSelector((state) => state.quizesReducer);
 
-  const [checkedAnswer, setCheckedAnswer] = useState('');
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
-  const [selectedAnswerList, setSelectedAnswerList] = useState<string[]>([]);
-  const [isDisabledBtn, setIsDisabledBtn] = useState(true);
+  const [checkedAnswer, setCheckedAnswer] = useState(''); // checked answer
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0); // number of active quiestion
+  const [selectedAnswerList, setSelectedAnswerList] = useState<string[]>([]); // List of answers
+  const [isDisabledBtn, setIsDisabledBtn] = useState(true); // disable nextBtn
+  const [isFinishTime, setIsFinishTime] = useState(false); // finishes time for quiz
 
-  const questionsLength = questions?.length;
-  const isLastQuestion = questionsLength && activeQuestionIndex < (questionsLength - 1);
+  const amountOfQuiestions = questions?.length; // number of all questions
+  const amountOfAnswers = selectedAnswerList.length; // number of answers
+  const isLastQuestion = amountOfQuiestions && activeQuestionIndex < (amountOfQuiestions - 1);
 
   const handleNexQuestion = () => {
-    if (selectedAnswerList.length > activeQuestionIndex + 1) {
+    if (amountOfAnswers > activeQuestionIndex + 1) {
       setIsDisabledBtn(false);
       setCheckedAnswer(selectedAnswerList[activeQuestionIndex + 1]);
     } else {
@@ -56,12 +58,12 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   };
 
   const handleOptionChange = (el: string): void => {
-    if (selectedAnswerList.length >= activeQuestionIndex) {
+    if (amountOfAnswers >= activeQuestionIndex) {
       setIsDisabledBtn(false);
     } else {
       setIsDisabledBtn(true);
     }
-    if (selectedAnswerList.length === activeQuestionIndex + 1 || selectedAnswerList.length > activeQuestionIndex) {
+    if (amountOfAnswers === activeQuestionIndex + 1 || amountOfAnswers > activeQuestionIndex) {
       setSelectedAnswerList((prevAnswer) => {
         prevAnswer.splice(activeQuestionIndex, 1, el);
         return [...prevAnswer];
@@ -85,24 +87,28 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
           return acc;
         }, 0);
       }
-      const totalResult = calculateResult(Number(questionsLength), correctAnswers);
+      const totalResult = calculateResult(Number(amountOfQuiestions), correctAnswers);
       navigate(pathToResultPage, { state: { quizId: id, quizResult: totalResult } });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
   };
 
-  const finishedTimer = () => {
-    // TODO add logic for finished
-    console.log('finished timer');
-    // navigate(pathToResultPage, { state: { quizId: id, quizResult: 0 } });
+  const finishedTimer = (isFinishedTime: boolean) => {
+    setIsFinishTime(isFinishedTime);
   };
+
+  useEffect(() => {
+    if (isFinishTime) {
+      handleFinishQuiz();
+    }
+  }, [isFinishTime]);
 
   if (status === 'loading') return (<Preloader />);
 
   return (
       <Box mt="32px">
-      {(questionsLength) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
+      {(amountOfQuiestions) && <Card sx={{ maxWidth: '100%', paddingTop: '8px' }}>
         <Timer time={TIMERTIME} finishedTimer={finishedTimer} />
         <CardContent>
         <Typography variant="body1" pb="16px">
