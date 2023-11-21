@@ -10,10 +10,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Preloader from '../../../components/common/Preloader';
 import routes from '../../../routes/routes';
 import { IQuizItem, EStatusType } from '../../../store/services/quiz/constant';
-import { useAppSelector, useAppDispatch } from '../../../hooks/hooks';
-import { quizesThunks } from '../../../store/services/quiz/index';
-import calculateResult from '../../../utils/calculateResult';
 import Timer from '../../../components/Timer/Timer';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { quizesThunks } from '../../../store/services/quiz/index';
 
 type QuizContentProps = {
   quiz: IQuizItem;
@@ -22,14 +21,13 @@ type QuizContentProps = {
 
 const QuizContent = ({ quiz, status }: QuizContentProps) => {
   const locationParams = useLocation();
-  const { questions, title, id } = quiz;
+  const { quizId } = locationParams.state;
+  const { questions, title } = quiz;
   const navigate = useNavigate();
   // TODO get Time from form
   const TIMERTIME = 30;
   const pathToResultPage = `/${routes.quiz.key}/${title}/${routes.quiz.resultPage}`;
-
   const dispatch = useAppDispatch();
-  const { answerResult } = useAppSelector((state) => state.quizesReducer);
 
   const [checkedAnswer, setCheckedAnswer] = useState(''); // checked answer
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0); // number of active quiestion
@@ -75,23 +73,8 @@ const QuizContent = ({ quiz, status }: QuizContentProps) => {
   };
 
   const handleFinishQuiz = async () => {
-    try {
-      await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
-      let correctAnswers = 0;
-      if (answerResult.length > 0) {
-        correctAnswers = selectedAnswerList.reduce((acc: number, cur: string) => {
-          if ([...answerResult].includes(cur)) {
-            // eslint-disable-next-line no-param-reassign
-            acc += 1;
-          }
-          return acc;
-        }, 0);
-      }
-      const totalResult = calculateResult(Number(amountOfQuiestions), correctAnswers);
-      navigate(pathToResultPage, { state: { quizId: id, quizResult: totalResult } });
-    } catch (error) {
-      console.warn(error);
-    }
+    await dispatch(quizesThunks.getAnswers(locationParams.state.quizId));
+    navigate(pathToResultPage, { state: { quizId, selectedAnswerList, amountOfQuiestions } });
   };
 
   const finishedTimer = (isFinishedTime: boolean) => {

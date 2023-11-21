@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import QuizInfo from './QuizInfo/QuizInfo';
 import QuizContent from './QuizContent/QuizContent';
@@ -27,11 +27,13 @@ const Quiz = () => {
 
   return (
     <Container sx={{ height: '100%' }}>
-      <QuizInfo
-        quizImg={quiz.img}
-        quizTitle={quiz.title}
-        quizDescription={quiz.description}/>
-      {quiz.questions ? <QuizContent quiz={quiz} status={status}/> : <QuizNoContent />}
+       <Box pb={4}>
+        <QuizInfo
+          quizImg={quiz.img}
+          quizTitle={quiz.title}
+          quizDescription={quiz.description}/>
+        {(quiz.questions && quiz.questions.length > 0) ? <QuizContent quiz={quiz} status={status}/> : <QuizNoContent />}
+       </Box>
     </Container>
   );
 };
