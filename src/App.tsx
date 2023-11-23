@@ -6,6 +6,7 @@ import ColorModeContext from './config/color-context';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Quiz from './pages/Quiz/Quiz';
+import NewQuiz from './pages/NewQuiz/NewQuiz';
 import About from './pages/About/About';
 import Layout from './components/Layout/Layout';
 import QuizResult from './pages/QuizResult/QuizResult';
@@ -32,6 +33,7 @@ const App = () => {
               <Route path={`${routes.quiz.key}/:id`} element={<Quiz />} />
               <Route path={routes.about} element={<About />} />
               <Route path={`${routes.quiz.key}/:id/${routes.quiz.resultPage}`} element={<QuizResult />} />
+              <Route path={routes.newquiz} element={<NewQuiz />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
