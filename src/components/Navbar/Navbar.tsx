@@ -18,6 +18,14 @@ const Navbar = () => (
         </ListItemWrapper>
         <ListItemWrapper disablePadding>
           <NavLink
+            to={`/${routes.newquiz}`}
+            className={({ isActive }) => (isActive ? 'active' : '')}
+          >
+            <ListItemText primary="New Quiz" />
+          </NavLink>
+        </ListItemWrapper>
+        <ListItemWrapper disablePadding>
+          <NavLink
             to={`/${routes.about}`}
             className={({ isActive }) => (isActive ? 'active' : '')}
           >
