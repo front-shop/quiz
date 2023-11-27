@@ -17,7 +17,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
     let min: number = timeInMinutes;
 
     let timerId = setTimeout(function run() {
-      if (sec === 0) {
+      if (!sec) {
         min -= 1;
         sec = 59;
         setMinutes(min);
@@ -25,7 +25,7 @@ const Timer = ({ time, finishedTimer }: TimerProps) => {
         sec -= 1;
       }
 
-      if (min === 0 && sec === 0) {
+      if (!min && !sec) {
         finishedTimer(true);
         clearTimeout(timerId);
       } else {
