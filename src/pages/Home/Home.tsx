@@ -9,7 +9,7 @@ const Home = () => (
       <MainWrapper>
         <Search />
         <Typography variant="h3" pb={3} pt={3}>
-          Quizzes
+          Quizzes test
         </Typography>
         <QuizItems />
       </MainWrapper>
