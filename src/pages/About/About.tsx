@@ -10,10 +10,7 @@ const About = () => (
         About Us
       </Typography>
       <Typography variant="body1" pb={3}>
-        Welcome to
-        <b> QUIZ</b>
-        ,
-        your ultimate destination for challenging and informative technical
+        Welcome to <strong> QUIZ</strong>, your ultimate destination for challenging and informative technical
         quizzes! We are passionate about technology and learning, and we`ve created this platform
         to share our love for all things tech with you.
       </Typography>
